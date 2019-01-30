@@ -1,0 +1,61 @@
+<fieldset ng-controller="${alias}Ctrl">
+    <legend>
+        <button class="btn btn-default" ng-click="add()">
+            <i class="fa fa-plus"></i>${alias}.
+        </button>
+    </legend>
+    <form style="width: 100%;align-items: flex-end" cc-form="form-group">
+       <form-groups>
+           #for(column:columns)
+           #continue(column[0]=='id')
+           <form-group>
+           <label>${column[4]}</label>
+           #if(column[1]=='enum')
+           <select ng-init="q.${column[0]} = '${column[6]}'" ng-model="q.${column[0]}" ng-options="x for x in [${column[5]}]"></select>
+           #elseif(column[1]=='datetime')
+           <input type="date" placeholder="${column[4]}" ng-model="q.${column[0]}">
+           #elseif(column[1]=='int')
+           <input type="number" placeholder="${column[4]}" ng-model="q.${column[0]}">
+           #elseif(column[2])
+           <input type="text" placeholder="${column[4]}" ng-model="q.${column[0]}" cc-l-max="${column[2]}:1">
+           <help-block>
+           <p cc-error-1>data length must less then ${column[2]} !</p>
+           </help-block>
+           #else
+           <input type="text" placeholder="${column[4]}" ng-model="q.${column[0]}">
+           #end
+           </form-group>
+           #end
+       </form-groups>
+       <btn-group>
+           <input type="text" placeholder="Search for..." ng-model="q.keyword">
+           <button class="btn btn-default" searchButton>搜索</button>
+       </btn-group>
+    </form>
+    <table>
+        <thead>
+        <tr>
+            #for(column:columns)
+            #continue(column[0]=='id')
+            <th>${column[4]}</th>
+            #end
+            <th>ID</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="${alias} in ${alias}s|filter:q.keyword">
+            #for(column:columns)
+            #continue(column[0]=='id')
+            <td ng-bind-html="${alias}.${column[0]}|highlight:q.keyword"></td>
+            #end
+            <td ng-bind-html="${alias}.id|highlight:q.keyword" class="hidden-xs"></td>
+            <td>
+                <button class="btn" ng-click="update(${alias})">修改</button>
+                <button class="btn" ng-click="remove(${alias})">删除</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <cc-pagination cc-src="${alias}/byPage.do" cc-model="${alias}s" cc-searchobj="q" cc-btn="[searchButton]"/>
+</fieldset>

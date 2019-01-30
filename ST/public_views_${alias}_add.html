@@ -1,0 +1,22 @@
+<form cc-form="form-group">
+    #for(column:columns)
+    #continue(column[0]=='id')
+    <form-group>
+        <label>${column[4]}</label>
+        #if(column[1]=='enum')
+        <select ng-init="${alias}.${column[0]} = '${column[6]}'" ng-model="${alias}.${column[0]}" ng-options="x for x in [${column[5]}]"></select>
+        #elseif(column[1]=='datetime')
+        <input type="date" placeholder="${column[4]}" ng-model="${alias}.${column[0]}">
+        #elseif(column[1]=='int')
+        <input type="number" placeholder="${column[4]}" ng-model="${alias}.${column[0]}">
+        #elseif(column[2])
+        <input type="text" placeholder="${column[4]}" ng-model="${alias}.${column[0]}" cc-l-max="${column[2]}:1">
+        <help-block>
+        <p cc-error-1>data length must less then ${column[2]} !</p>
+        </help-block>
+        #else
+        <input type="text" placeholder="${column[4]}" ng-model="${alias}.${column[0]}">
+        #end
+    </form-group>
+    #end
+</form>
