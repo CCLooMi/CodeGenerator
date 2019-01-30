@@ -129,8 +129,8 @@ public class CodeG extends CodeGenerator{
 			e.printStackTrace();
 		}
 	}
-	public static void moveCode2Trash(String tableName) {
-		removeCode(tableName);
+	public static String moveCode2Trash(String tableName) {
+		return removeCode(tableName);
 	}
 	/**
 	 * 描述：生成一个模块代码
