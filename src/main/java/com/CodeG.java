@@ -222,6 +222,31 @@ public class CodeG extends CodeGenerator{
 		generateModelCode(ctx, toFile, filter,sourceMap);
 		return (String) ctx.get("alias");
 	}
+	/**
+	 * 描述：通过column信息列表生成代码并编译
+	 * 作者：chenxj
+	 * 日期：2019年1月30日 - 下午11:43:31
+	 * @param tableName
+	 * @param sa
+	 * @return
+	 */
+	public String gernerateModelCodeWithColumasAndCompile(String tableName,List<String[]>sa) {
+		Map<String, String>sourceMap=new HashMap<>();
+		String n=gernerateModelCodeWithColumas(tableName, sa, true, fn->{return FilterResult.CONTINUE;}, sourceMap);
+		//编译sourceMap
+		List<Class<?>>cls=new ArrayList<>(1);
+		CCCompiler.compile(sourceMap, (name,c)->{
+			SpringUtil.registBean((Class<?>)c);
+			if(BaseController.class.isAssignableFrom((Class<?>)c)) {
+				cls.add((Class<?>)c);
+			}
+		});
+		//必须等所有编译好的class注册之后再解析controller中handlerMethod
+		if(!cls.isEmpty()) {
+			SpringUtil.detectHandlerMethods(cls.get(0));
+		}
+		return n;
+	}
 	public static interface Filter{
 		public FilterResult doFilter(String name);
 	}
