@@ -230,7 +230,7 @@ public class CodeG extends CodeGenerator{
 	 * @param sa
 	 * @return
 	 */
-	public String gernerateModelCodeWithColumasAndCompile(String tableName,List<String[]>sa) {
+	public static String gernerateModelCodeWithColumasAndCompile(String tableName,List<String[]>sa) {
 		Map<String, String>sourceMap=new HashMap<>();
 		String n=gernerateModelCodeWithColumas(tableName, sa, true, fn->{return FilterResult.CONTINUE;}, sourceMap);
 		//编译sourceMap
