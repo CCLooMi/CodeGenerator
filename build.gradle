@@ -21,7 +21,7 @@ dependencies {
 		def springBootVersion	= "1.+"
 		def springVersion		= "4.+"
     compile (
-    	["ccloomi.com:core:1.+"],
+    	["com.ccloomi:core:1.+"],
     	["org.rocksdb:rocksdbjni:5.+"],
 		["org.antlr:antlr4:4.+"],
 		["org.javassist:javassist:3.24.1-GA"],
