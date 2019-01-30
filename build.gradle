@@ -5,11 +5,12 @@ def artifactId='CodeGenerator'
 apply plugin: 'java'
 apply plugin: 'maven'
 
+def mvnRelease='http://localhost:8081/repository/maven-releases/'
 allprojects {
 	repositories {
 		maven{url='https://maven.aliyun.com/nexus/content/groups/public/'}
 		maven{url='http://localhost:8081/repository/alimaven-central/'}
-		maven{url="http://localhost:8081/repository/maven-releases/"}
+		maven{url="$mvnRelease"}
 		mavenCentral()
 	}
 }
@@ -20,7 +21,7 @@ dependencies {
 		def springBootVersion	= "1.+"
 		def springVersion		= "4.+"
     compile (
-    	["com.ccloomi:core:1.+"],
+    	["ccloomi.com:core:1.+"],
     	["org.rocksdb:rocksdbjni:5.+"],
 		["org.antlr:antlr4:4.+"],
 		["org.javassist:javassist:3.24.1-GA"],
@@ -46,14 +47,10 @@ dependencies {
     fileTree(dir: 'libs', include: '*.jar'))
     testCompile(["junit:junit:4.+"],["org.mockito:mockito-core:2.+"])
 }
-jar {
-    String classPath = ''
-    configurations.runtime.each {classPath += " lib//"+it.name}
-}
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: "http://10.9.9.116:8081/nexus/content/repositories/releases/") {
+            repository(url: "$mvnRelease") {
                 authentication(userName: "admin", password: "admin123")
             }
             pom.version = "$project.version"
