@@ -8,8 +8,8 @@ apply plugin: 'maven'
 allprojects {
 	repositories {
 		maven{url='https://maven.aliyun.com/nexus/content/groups/public/'}
-		maven{url='http://10.9.9.116:8081/nexus/content/repositories/central/'}
-		maven{url='http://10.9.9.116:8081/nexus/content/repositories/releases/'}
+		maven{url='http://localhost:8081/repository/alimaven-central/'}
+		maven{url="http://localhost:8081/repository/maven-releases/"}
 		mavenCentral()
 	}
 }
