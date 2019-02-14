@@ -55,19 +55,7 @@ public class CodeGenerator {
 	static final Set<String>tmSet;
 	static final Map<String, String>tmMap;
 	static {
-		Properties config=new Properties();
-		config.put(JetConfig.IMPORT_FUNCTIONS,Functions.class.getName());
-		for(Entry<Object, Object>e:settings.entrySet()) {
-			if(((String)e.getKey()).startsWith("jetx.")) {
-				if(config.containsKey(e.getKey())) {
-					config.put(e.getKey(), config.get(e.getKey())+","+e.getValue());
-				}else {
-					config.put(e.getKey(), e.getValue());
-				}
-			}
-		}
-		engine=JetEngine.create(config);
-		
+		Map<String, String>filesMap=new HashMap<>();
 		Path p=Paths.getUserDirFile("ST").toPath();
 		try {
 			Files.walkFileTree(p, new FileVisitor<Path>() {
@@ -82,7 +70,7 @@ public class CodeGenerator {
 						if(fname.endsWith(".properties")) {
 							settings.load(new FileInputStream(file.toFile()));
 						}else if(fname.charAt(0)!='.'){
-							tps.put(fname,engine.createTemplate(new String(Files.readAllBytes(file),UTF_8)));
+							filesMap.put(fname, new String(Files.readAllBytes(file),UTF_8));
 						}
 					}
 					return FileVisitResult.CONTINUE;
@@ -99,6 +87,25 @@ public class CodeGenerator {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		//初始化engine
+		Properties config=new Properties();
+		config.put(JetConfig.IMPORT_FUNCTIONS,Functions.class.getName());
+		for(Entry<Object, Object>e:settings.entrySet()) {
+			if(((String)e.getKey()).startsWith("jetx.")) {
+				if(config.containsKey(e.getKey())) {
+					config.put(e.getKey(), config.get(e.getKey())+","+e.getValue());
+				}else {
+					config.put(e.getKey(), e.getValue());
+				}
+			}
+		}
+		engine=JetEngine.create(config);
+		//编译模板
+		for(Entry<String, String>e:filesMap.entrySet()) {
+			tps.put(e.getKey(), engine.createTemplate(e.getValue()));
+		}
+		filesMap.clear();
+		//other config
 		tmSet=toSet(settings.getProperty("table.mid",""),",");
 		tmMap=toMap(settings.getProperty("model.alias", ""), ",");
 		MODULE=settings.getProperty("module", "unknown");
