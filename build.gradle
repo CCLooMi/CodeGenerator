@@ -5,11 +5,12 @@ def artifactId='CodeGenerator'
 apply plugin: 'java'
 apply plugin: 'maven'
 
+def mvnLocal  ='http://localhost:8081/repository/alimaven-central/'
 def mvnRelease='http://localhost:8081/repository/maven-releases/'
 allprojects {
 	repositories {
 		maven{url='https://maven.aliyun.com/nexus/content/groups/public/'}
-		maven{url='http://localhost:8081/repository/alimaven-central/'}
+		maven{url="$mvnLocal"}
 		maven{url="$mvnRelease"}
 		mavenCentral()
 	}
@@ -59,16 +60,3 @@ uploadArchives {
         }
     }
 }
-/**
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: "http://localhost:8081/repository/maven-releases/") {
-                authentication(userName: "admin", password: "admin123")
-            }
-            pom.version = "$project.version"
-            pom.artifactId = "$artifactId"
-            pom.groupId = "$project.group"
-        }
-    }
-}**/
