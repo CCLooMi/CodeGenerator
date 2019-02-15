@@ -1,4 +1,4 @@
-package com.controller;
+package ${pkg};
 
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.service.impl;
+package ${pkg};
 
 import java.util.ArrayList;
 import java.util.List;

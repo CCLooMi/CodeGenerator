@@ -1,7 +1,7 @@
 package ${pkg};
 ${imports(columns)}
 import com.ccloomi.core.annotation.Table;
-import com.ccloomi.core.common.entity.IdEntity;
+import com.ccloomi.core.common.entity.${IF(hasId,"Id","Base")}Entity;
 
 /**© 2015-${now().format("yyyy")} ${copyright} Copyright
  * 类    名：${up1(name)}Entity

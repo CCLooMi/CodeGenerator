@@ -1,4 +1,4 @@
-package com.service;
+package ${pkg};
 
 import java.util.Map;
 import com.ccloomi.core.common.service.BaseService;

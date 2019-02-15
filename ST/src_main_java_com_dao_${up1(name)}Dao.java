@@ -1,4 +1,4 @@
-package com.dao;
+package ${pkg};
 
 import com.ccloomi.core.common.dao.BaseDao;
 import com.entity.${pf(prefix)}${up1(name)}Entity;

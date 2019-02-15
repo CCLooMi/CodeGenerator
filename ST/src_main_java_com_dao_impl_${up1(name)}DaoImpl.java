@@ -1,4 +1,4 @@
-package com.dao.impl;
+package ${pkg};
 
 import org.springframework.stereotype.Service;
 
