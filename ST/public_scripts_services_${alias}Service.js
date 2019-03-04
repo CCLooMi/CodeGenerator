@@ -10,13 +10,13 @@ angular.module(module)
                     $http.post('${alias}/add.do',scope.${alias})
                         .then(function successCallback(resp) {
                             var data=resp.data;
-                            if(data.code==0){
-                                scope.${alias}.id=data.data;
+                            if(data[0]==0){
+                                scope.${alias}.id=data[1];
                                 scope.${alias}s.push(scope.${alias});
                                 refreshScope(scope);
                                 S_dialog.alert('添加成功','成功添加${comment}','success');
                             }else{
-                                S_dialog.alert('添加失败',data.data,'error');
+                                S_dialog.alert('添加失败',data[1],'error');
                             }
                         });
                 })
@@ -28,10 +28,10 @@ angular.module(module)
                     $http.post('${alias}/update.do',scope.${alias})
                         .then(function successCallback(resp) {
                             var data=resp.data;
-                            if(data.code==0){
+                            if(data[0]==0){
                                 S_dialog.alert('修改成功','成功修改${comment}','success');
                             }else{
-                                S_dialog.alert('修改失败',data.data,'error');
+                                S_dialog.alert('修改失败',data[1],'error');
                             }
                         });
                 }, function () {
