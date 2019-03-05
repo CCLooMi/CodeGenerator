@@ -9,7 +9,7 @@ def mvnLocal  ='http://localhost:8081/repository/alimaven-central/'
 def mvnRelease='http://localhost:8081/repository/maven-releases/'
 allprojects {
 	repositories {
-		maven{url='https://maven.aliyun.com/nexus/content/groups/public/'}
+		//maven{url='https://maven.aliyun.com/nexus/content/groups/public/'}
 		maven{url="$mvnLocal"}
 		maven{url="$mvnRelease"}
 		mavenCentral()
@@ -22,7 +22,7 @@ dependencies {
 		def springBootVersion	= "1.+"
 		def springVersion		= "4.+"
     compile (
-    	["com.ccloomi:core:1.+"],
+    	["com.ccloomi:core:1.2.0"],
     	["org.rocksdb:rocksdbjni:5.+"],
 		["org.antlr:antlr4:4.+"],
 		["org.javassist:javassist:3.24.1-GA"],
