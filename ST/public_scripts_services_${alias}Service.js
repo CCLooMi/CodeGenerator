@@ -7,7 +7,7 @@ angular.module(module)
             add: function (scope) {
             	scope.${alias}={};
                 S_dialog.dialog('添加${comment}','views/${alias}/add.html',scope, function () {
-                    $http.post('${alias}/add.do',scope.${alias})
+                    $http.post('${alias}/add',scope.${alias})
                         .then(function successCallback(resp) {
                             var data=resp.data;
                             if(data[0]==0){
@@ -25,7 +25,7 @@ angular.module(module)
                 var cloneObj=cloneFrom(${alias});
                 scope.${alias}=${alias};
                 S_dialog.dialog('修改${comment}','views/${alias}/add.html',scope, function () {
-                    $http.post('${alias}/update.do',scope.${alias})
+                    $http.post('${alias}/update',scope.${alias})
                         .then(function successCallback(resp) {
                             var data=resp.data;
                             if(data[0]==0){
@@ -40,7 +40,7 @@ angular.module(module)
                 })
             },
             remove: function (scope,${alias}) {
-                S_dialog.alertRemove('${alias}/remove.do',${alias}, function () {
+                S_dialog.alertRemove('${alias}/remove',${alias}, function () {
                     scope.${alias}s.splice(scope.${alias}s.indexOf(${alias}),1);
                     refreshScope(scope);
                 })
